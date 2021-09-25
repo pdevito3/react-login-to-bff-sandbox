@@ -16,11 +16,25 @@ namespace CarbonKitchenAuth
                 new IdentityResources.Profile(),
             };
 
+        public static IEnumerable<ApiResource> ApiResources =>
+            new List<ApiResource>
+            {
+                new ApiResource("recipemanagement", "Recipe Management")
+                {
+                    Scopes = {"recipes.read", "recipes.add", "recipes.delete", "recipes.update"},
+                    ApiSecrets = { new Secret("secret".Sha256()) },
+                },
+            };
+        
+        // allow access to identity information. client level rules of who can access what (e.g. read:sample, read:order, create:order, read:report)
+        // this will be in the audience claim and will be checked by the jwt middleware to grant access or not
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("scope1"),
-                new ApiScope("scope2"),
+                new ApiScope("recipes.read", "CanReadRecipes"),
+                new ApiScope("recipes.add", "CanAddRecipes"),
+                new ApiScope("recipes.update", "CanUpdateRecipes"),
+                new ApiScope("recipes.delete", "CanDeleteRecipes"),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -42,16 +56,23 @@ namespace CarbonKitchenAuth
                 new Client
                 {
                     ClientId = "interactive",
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
+                    ClientName = "Interactive Client",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
                     
                     AllowedGrantTypes = GrantTypes.Code,
-
-                    RedirectUris = { "https://localhost:44300/signin-oidc" },
-                    FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
-
+                    RedirectUris = {"https://localhost:5375/swagger/oauth2-redirect.html"},
+                    PostLogoutRedirectUris = { "http://localhost:5375/" },
+                    FrontChannelLogoutUri =    "http://localhost:5375/signout-oidc",
+                    AllowedCorsOrigins = {"https://localhost:5375"},
+                    
                     AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "scope2" }
+                    RequirePkce = true,
+                    RequireClientSecret = true,
+                    AllowedScopes = { "openid", "profile",
+                        "recipes.read",
+                        "recipes.add",
+                        "recipes.update",
+                        "recipes.delete" }
                 },
             };
     }

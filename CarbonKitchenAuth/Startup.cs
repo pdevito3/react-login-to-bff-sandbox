@@ -42,6 +42,7 @@ namespace CarbonKitchenAuth
             // in-memory, code config
             builder.AddInMemoryIdentityResources(Config.IdentityResources);
             builder.AddInMemoryApiScopes(Config.ApiScopes);
+            builder.AddInMemoryApiResources(Config.ApiResources); // this is the new api resource registration
             builder.AddInMemoryClients(Config.Clients);
 
             services.AddAuthentication()

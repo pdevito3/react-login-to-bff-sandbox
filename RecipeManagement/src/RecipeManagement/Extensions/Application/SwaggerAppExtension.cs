@@ -13,6 +13,7 @@ namespace RecipeManagement.Extensions.Application
             {
                 config.SwaggerEndpoint("/swagger/v1/swagger.json", "");
                 config.OAuthClientId(configuration["JwtSettings:ClientId"]);
+                config.OAuthClientSecret("secret");
                 config.OAuthUsePkce();
             });
         }

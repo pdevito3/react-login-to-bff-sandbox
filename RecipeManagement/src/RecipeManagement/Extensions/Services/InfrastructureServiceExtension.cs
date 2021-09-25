@@ -40,8 +40,6 @@ namespace RecipeManagement.Extensions.Services
             {
                 options.AddPolicy("CanReadRecipes",
                     policy => policy.RequireClaim("scope", "recipes.read"));
-                options.AddPolicy("CanReadRecipes",
-                    policy => policy.RequireClaim("scope", "recipes.read"));
                 options.AddPolicy("CanAddRecipes",
                     policy => policy.RequireClaim("scope", "recipes.add"));
                 options.AddPolicy("CanUpdateRecipes",

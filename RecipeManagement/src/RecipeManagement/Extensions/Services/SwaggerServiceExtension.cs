@@ -44,7 +44,6 @@ namespace RecipeManagement.Extensions.Services
                             Scopes = new Dictionary<string, string>
                             {
                                     { "recipes.read","CanReadRecipes" },
-                                    { "recipes.read","CanReadRecipes" },
                                     { "recipes.add","CanAddRecipes" },
                                     { "recipes.update","CanUpdateRecipes" },
                                     { "recipes.delete","CanDeleteRecipes" },
