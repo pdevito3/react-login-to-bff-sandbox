@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeManagement.SharedTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeManagement.UnitTests", "RecipeManagement\tests\RecipeManagement.UnitTests\RecipeManagement.UnitTests.csproj", "{0544ED89-EF43-498C-B977-A1A592750127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonKitchenAuth", "CarbonKitchenAuth\CarbonKitchenAuth.csproj", "{A65F0301-7EA1-4A69-A2F0-8321486936A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,18 @@ Global
 		{0544ED89-EF43-498C-B977-A1A592750127}.Release|x64.Build.0 = Release|Any CPU
 		{0544ED89-EF43-498C-B977-A1A592750127}.Release|x86.ActiveCfg = Release|Any CPU
 		{0544ED89-EF43-498C-B977-A1A592750127}.Release|x86.Build.0 = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|x64.Build.0 = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Debug|x86.Build.0 = Debug|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|x64.ActiveCfg = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|x64.Build.0 = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{A65F0301-7EA1-4A69-A2F0-8321486936A6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{350B93A1-0C07-4A0C-A932-92766ED4D562} = {57E3BF69-0314-4C0B-9F8D-514DA9725B2B}
