@@ -49,7 +49,7 @@ namespace CarbonKitchenBff
           .AddOpenIdConnect("oidc", options =>
           {
               options.Authority = "https://localhost:5010";
-              options.ClientId = "interactive";
+              options.ClientId = "interactive.bff";
               options.ClientSecret = "secret";
               options.ResponseType = "code";
               options.ResponseMode = "query";

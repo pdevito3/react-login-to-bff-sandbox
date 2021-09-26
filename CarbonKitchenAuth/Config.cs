@@ -74,6 +74,29 @@ namespace CarbonKitchenAuth
                         "recipes.update",
                         "recipes.delete" }
                 },
+
+                // interactive client using code flow + pkce
+                new Client
+                {
+                    ClientId = "interactive.bff",
+                    ClientName = "Interactive BFF",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris = { "https://localhost:4301/signin-oidc" },
+                    FrontChannelLogoutUri = "https://localhost:4301/signout-oidc",
+                    PostLogoutRedirectUris = { "https://localhost:4301/signout-callback-oidc" },
+                    AllowedCorsOrigins = {"https://localhost:5375", "https://localhost:4301"},
+                    
+                    AllowOfflineAccess = true,
+                    RequirePkce = true,
+                    RequireClientSecret = true,
+                    AllowedScopes = { "openid", "profile",
+                        "recipes.read",
+                        "recipes.add",
+                        "recipes.update",
+                        "recipes.delete" }
+                },
             };
     }
 }
