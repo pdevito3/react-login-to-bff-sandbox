@@ -12,25 +12,28 @@
     "rimraf": "^2.6.2"
   },
   "devDependencies": {
+    "@craco/craco": "^6.3.0",
     "ajv": "^6.9.1",
+    "autoprefixer": "^9.8.7",
     "cross-env": "^5.2.0",
-    "typescript": "^3.7.5",
     "eslint": "^7.11.0",
     "eslint-config-react-app": "^5.2.0",
     "eslint-plugin-flowtype": "^4.6.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
-    "nan": "^2.14.1"
+    "nan": "^2.14.1",
+    "postcss": "^7.0.38",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
+    "typescript": "^3.7.5"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "scripts": {
-    "start": "rimraf ./build && react-scripts start",
-    "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
+    "test": "cross-env CI=true craco test --env=jsdom",
+    "start": "craco start",
+    "build": "craco build",
     "lint": "eslint ./src/"
   },
   "browserslist": {
