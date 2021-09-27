@@ -9,8 +9,9 @@ namespace CarbonKitchenBff
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using System;
-    
-      public class Startup
+    using Duende.Bff;
+
+    public class Startup
   {
       public Startup(IConfiguration configuration)
       {
@@ -33,7 +34,10 @@ namespace CarbonKitchenBff
           
           services.AddControllersWithViews();
 
-          services.AddBff();
+          services.AddBff(options =>
+          {
+          });
+          services.AddTransient<ILoginService, ApiLoginService>();
 
           services.AddAuthentication(options =>
           {
@@ -129,6 +133,7 @@ namespace CarbonKitchenBff
           app.UseEndpoints(endpoints =>
           {
               endpoints.MapBffManagementEndpoints();
+              endpoints.MapBffManagementLoginEndpoint();
           });
 
           app.UseSpa(spa =>
