@@ -1,6 +1,7 @@
 namespace RecipeManagement.Extensions.Services
 {
     using MassTransit;
+    using RecipeManagement.Extensions.Services.ConsumerRegistrations;
     using RecipeManagement.Extensions.Services.ProducerRegistrations;
     using Messages;
     using Microsoft.AspNetCore.Hosting;
@@ -30,6 +31,7 @@ namespace RecipeManagement.Extensions.Services
                         cfg.RecipeAddedEndpoint();
 
                         // Consumers -- Do Not Delete This Comment
+                        cfg.AddToBookEndpoint(context);
                     });
                 });
                 services.AddMassTransitHostedService();

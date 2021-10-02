@@ -15,6 +15,7 @@ namespace RecipeManagement.IntegrationTests
     using System;
     using MassTransit.Testing;
     using MassTransit;
+    using RecipeManagement.Domain.EventHandlers;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -28,6 +29,7 @@ namespace RecipeManagement.IntegrationTests
         private static IServiceScopeFactory _scopeFactory;
         private static Checkpoint _checkpoint;
         public static InMemoryTestHarness _harness;
+        public static ServiceProvider _provider;
 
         [OneTimeSetUp]
         public async Task RunBeforeAnyTests()
@@ -66,11 +68,14 @@ namespace RecipeManagement.IntegrationTests
             EnsureDatabase();
 
             // MassTransit Setup -- Do Not Delete Comment
-            services.AddMassTransitInMemoryTestHarness(cfg =>
+            _provider = services.AddMassTransitInMemoryTestHarness(cfg =>
             {
                 // Consumer Registration -- Do Not Delete Comment
-            });
-            _harness = services.BuildServiceProvider().GetRequiredService<InMemoryTestHarness>();
+
+                cfg.AddConsumer<AddToBook>();
+                cfg.AddConsumerTestHarness<AddToBook>();
+            }).BuildServiceProvider();
+            _harness = _provider.GetRequiredService<InMemoryTestHarness>();
             await _harness.Start();
         }
 

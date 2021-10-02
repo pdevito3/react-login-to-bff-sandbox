@@ -9,6 +9,11 @@ namespace RecipeManagement.IntegrationTests.FeatureTests.Recipe
     using RecipeManagement.Domain.Recipes.Features;
     using static TestFixture;
     using System;
+    using Domain.EventHandlers;
+    using MassTransit;
+    using MassTransit.Testing;
+    using Messages;
+    using Microsoft.Extensions.DependencyInjection;
     using RecipeManagement.Exceptions;
 
     public class AddRecipeCommandTests : TestBase
@@ -29,6 +34,30 @@ namespace RecipeManagement.IntegrationTests.FeatureTests.Recipe
                 options.ExcludingMissingMembers());
             recipeCreated.Should().BeEquivalentTo(fakeRecipeOne, options =>
                 options.ExcludingMissingMembers());
+        }
+        
+        [Test]
+        public async Task bus_consumer_test()
+        {
+            // Arrange
+            var message = new
+            {
+                RecipeId = Guid.NewGuid(),
+            };
+
+            // Act
+            await PublishMessage<IRecipeAdded>(message);
+
+            // Assert
+            // did the endpoint consume the message
+            (await _harness.Consumed.Any<IRecipeAdded>()).Should().Be(true);
+
+            // ensure that no faults were published by the consumer
+            (await _harness.Published.Any<Fault<IRecipeAdded>>()).Should().Be(false);
+            
+            // the add to book consumer consumed the message
+            var consumerHarness = _provider.GetRequiredService<IConsumerTestHarness<AddToBook>>();
+            (await consumerHarness.Consumed.Any<IRecipeAdded>()).Should().Be(true);
         }
     }
 }
