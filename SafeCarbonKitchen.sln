@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonKitchenAuth", "Carbon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonKitchenBff", "CarbonKitchenBff\CarbonKitchenBff.csproj", "{BC2B59A1-79C6-4E2E-B782-36FA863A0F85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,6 +122,18 @@ Global
 		{BC2B59A1-79C6-4E2E-B782-36FA863A0F85}.Release|x64.Build.0 = Release|Any CPU
 		{BC2B59A1-79C6-4E2E-B782-36FA863A0F85}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC2B59A1-79C6-4E2E-B782-36FA863A0F85}.Release|x86.Build.0 = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|x64.Build.0 = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Debug|x86.Build.0 = Debug|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|x64.ActiveCfg = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|x64.Build.0 = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|x86.ActiveCfg = Release|Any CPU
+		{BE5A9792-BA92-4A6F-89F2-65962C05ED5D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{350B93A1-0C07-4A0C-A932-92766ED4D562} = {57E3BF69-0314-4C0B-9F8D-514DA9725B2B}

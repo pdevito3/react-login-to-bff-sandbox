@@ -27,6 +27,7 @@ namespace RecipeManagement
         {
             services.AddCorsService("RecipeManagementCorsPolicy");
             services.AddInfrastructure(_config, _env);
+            services.AddMassTransitServices(_config);
             services.AddControllers()
                 .AddNewtonsoftJson();
             services.AddApiVersioningExtension();

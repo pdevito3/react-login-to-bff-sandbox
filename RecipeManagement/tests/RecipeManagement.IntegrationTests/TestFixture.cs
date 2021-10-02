@@ -13,6 +13,8 @@ namespace RecipeManagement.IntegrationTests
     using NUnit.Framework;
     using Respawn;
     using System;
+    using MassTransit.Testing;
+    using MassTransit;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -25,6 +27,7 @@ namespace RecipeManagement.IntegrationTests
         private static IWebHostEnvironment _env;
         private static IServiceScopeFactory _scopeFactory;
         private static Checkpoint _checkpoint;
+        public static InMemoryTestHarness _harness;
 
         [OneTimeSetUp]
         public async Task RunBeforeAnyTests()
@@ -37,6 +40,7 @@ namespace RecipeManagement.IntegrationTests
                 .AddInMemoryCollection(new Dictionary<string, string>
                     {
                         { "UseInMemoryDatabase", "false" },
+                        { "UseInMemoryBus", "true" },
                         { "ConnectionStrings:RecipeManagement", dockerConnectionString }
                     })
                 .AddEnvironmentVariables();
@@ -62,6 +66,12 @@ namespace RecipeManagement.IntegrationTests
             EnsureDatabase();
 
             // MassTransit Setup -- Do Not Delete Comment
+            services.AddMassTransitInMemoryTestHarness(cfg =>
+            {
+                // Consumer Registration -- Do Not Delete Comment
+            });
+            _harness = services.BuildServiceProvider().GetRequiredService<InMemoryTestHarness>();
+            await _harness.Start();
         }
 
         private static void EnsureDatabase()
@@ -182,11 +192,17 @@ namespace RecipeManagement.IntegrationTests
         }
 
         // MassTransit Methods -- Do Not Delete Comment
+        public static async Task PublishMessage<T>(object message)
+            where T : class
+        {
+            await _harness.Bus.Publish<T>(message);
+        }
 
         [OneTimeTearDown]
         public async Task RunAfterAnyTests()
         {
             // MassTransit Teardown -- Do Not Delete Comment
+            await _harness.Stop();
         }
     }
 }
