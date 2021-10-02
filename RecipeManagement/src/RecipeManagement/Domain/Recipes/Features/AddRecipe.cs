@@ -13,6 +13,8 @@ namespace RecipeManagement.Domain.Recipes.Features
     using System.Threading;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using MassTransit;
+    using Messages;
 
     public static class AddRecipe
     {
@@ -30,10 +32,12 @@ namespace RecipeManagement.Domain.Recipes.Features
         {
             private readonly RecipesDbContext _db;
             private readonly IMapper _mapper;
+            private readonly IPublishEndpoint _publishEndpoint;
 
-            public Handler(RecipesDbContext db, IMapper mapper)
+            public Handler(RecipesDbContext db, IMapper mapper, IPublishEndpoint publishEndpoint)
             {
                 _mapper = mapper;
+                _publishEndpoint = publishEndpoint;
                 _db = db;
             }
 
@@ -41,6 +45,11 @@ namespace RecipeManagement.Domain.Recipes.Features
             {
                 var recipe = _mapper.Map<Recipe> (request.RecipeToAdd);
                 _db.Recipes.Add(recipe);
+                
+                await _publishEndpoint.Publish<IRecipeAdded>(new
+                {
+                    RecipeId = recipe.Id
+                });
 
                 await _db.SaveChangesAsync();
 
