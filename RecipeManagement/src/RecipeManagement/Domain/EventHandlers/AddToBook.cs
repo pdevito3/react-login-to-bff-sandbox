@@ -1,5 +1,6 @@
 namespace RecipeManagement.Domain.EventHandlers
 {
+    using System;
     using AutoMapper;
     using MassTransit;
     using Messages;
@@ -28,6 +29,7 @@ namespace RecipeManagement.Domain.EventHandlers
         public Task Consume(ConsumeContext<IRecipeAdded> context)
         {
             // do work here
+            Console.WriteLine(context.Message.RecipeId);
 
             return Task.CompletedTask;
         }

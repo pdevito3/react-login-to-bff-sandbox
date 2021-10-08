@@ -20,6 +20,8 @@ namespace RecipeManagement.IntegrationTests
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Messages;
+    using RabbitMQ.Client;
 
     [SetUpFixture]
     public class TestFixture
@@ -71,11 +73,12 @@ namespace RecipeManagement.IntegrationTests
             _provider = services.AddMassTransitInMemoryTestHarness(cfg =>
             {
                 // Consumer Registration -- Do Not Delete Comment
-
                 cfg.AddConsumer<AddToBook>();
                 cfg.AddConsumerTestHarness<AddToBook>();
             }).BuildServiceProvider();
             _harness = _provider.GetRequiredService<InMemoryTestHarness>();
+            
+            services.AddScoped(_ => Mock.Of<IPublishEndpoint>());
             await _harness.Start();
         }
 
