@@ -12,7 +12,7 @@ const config = {
 }
 
 const fetchClaims = async () =>
-	axios.get('/bff/user', config)
+	axios.get('/auth/getuser', config)
 		.then((res) => res.data);
 
 

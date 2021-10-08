@@ -9,8 +9,12 @@ namespace CarbonKitchenBff
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using System;
-    
-      public class Startup
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+    using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+
+    public class Startup
   {
       public Startup(IConfiguration configuration)
       {
@@ -33,69 +37,84 @@ namespace CarbonKitchenBff
           
           services.AddControllersWithViews();
 
-          services.AddBff();
 
+          var domain = "dev-ziza5op9.us.auth0.com";
+          var clientid = "x9PBBz6mRYPUK7nATbMe7AcBQaxUxqRF";
+          var secret = "UWaajuXkrmUH1ab6udJdIhy3PHk135zKTYuhXadN3M7UtPN1tHysYYYRfKwWhRZs";
+          var audience = "auth0.first.api";
+          
           services.AddAuthentication(options =>
           {
-              options.DefaultScheme = "cookie";
-              options.DefaultChallengeScheme = "oidc";
-              options.DefaultSignOutScheme = "oidc";
+              options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+              options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+              options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
           })
-          .AddCookie("cookie", options =>
+          .AddCookie(o =>
           {
-              options.Cookie.Name = "__Host-bff";
-              options.Cookie.SameSite = SameSiteMode.Strict;
+              o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+              o.Cookie.SameSite = SameSiteMode.Strict;
+              o.Cookie.HttpOnly = true;
           })
-          .AddOpenIdConnect("oidc", options =>
+          .AddOpenIdConnect("Auth0", options =>
           {
-              options.Authority = "https://localhost:5010";
-              options.ClientId = "interactive.bff";
-              options.ClientSecret = "secret";
-              options.ResponseType = "code";
-              options.ResponseMode = "query";
+              // Set the authority to your Auth0 domain
+              options.Authority = $"https://{domain}";
 
-              options.GetClaimsFromUserInfoEndpoint = true;
-              options.MapInboundClaims = false;
-              options.SaveTokens = true;
+              // Configure the Auth0 Client ID and Client Secret
+              options.ClientId = clientid;
+              options.ClientSecret = secret;
 
+              // Set response type to code
+              options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+
+              options.ResponseMode = OpenIdConnectResponseMode.FormPost;
+
+              // Configure the scope
               options.Scope.Clear();
               options.Scope.Add("openid");
               options.Scope.Add("profile");
               options.Scope.Add("recipes.read");
-              // options.Scope.Add("offline_access");
+              
+              // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
+              // Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard
+              options.CallbackPath = new PathString("/callback");
 
-              options.TokenValidationParameters = new()
+              // Configure the Claims Issuer to be Auth0
+              options.ClaimsIssuer = "Auth0";
+
+              // This saves the tokens in the session cookie
+              options.SaveTokens = true;
+              
+              options.Events = new OpenIdConnectEvents
               {
-                  NameClaimType = "name",
-                  RoleClaimType = "role"
+                  // handle the logout redirection
+                  OnRedirectToIdentityProviderForSignOut = (context) =>
+                  {
+                      var logoutUri = $"https://{domain}/v2/logout?client_id={clientid}";
+
+                      var postLogoutUri = context.Properties.RedirectUri;
+                      if (!string.IsNullOrEmpty(postLogoutUri))
+                      {
+                          if (postLogoutUri.StartsWith("/"))
+                          {
+                              // transform to absolute
+                              var request = context.Request;
+                              postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                          }
+                          logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
+                      }
+                      context.Response.Redirect(logoutUri);
+                      context.HandleResponse();
+
+                      return Task.CompletedTask;
+                  },
+                  OnRedirectToIdentityProvider = context => {
+                      context.ProtocolMessage.SetParameter("audience", audience);
+                      return Task.CompletedTask;
+                  }
               };
           });
-          // .AddOpenIdConnect("oidc", options =>
-          // {
-          //     options.Authority = "https://demo.duendesoftware.com";
-          //     options.ClientId = "interactive.confidential";
-          //     options.ClientSecret = "secret";
-          //     options.ResponseType = "code";
-          //     options.ResponseMode = "query";
-          //
-          //     options.GetClaimsFromUserInfoEndpoint = true;
-          //     options.MapInboundClaims = false;
-          //     options.SaveTokens = true;
-          //
-          //     options.Scope.Clear();
-          //     options.Scope.Add("openid");
-          //     options.Scope.Add("profile");
-          //     options.Scope.Add("api");
-          //     options.Scope.Add("offline_access");
-          //
-          //     options.TokenValidationParameters = new()
-          //     {
-          //         NameClaimType = "name",
-          //         RoleClaimType = "role"
-          //     };
-          // });
-
-          // In production, the React files will be served from this directory
+          
           services.AddSpaStaticFiles(configuration =>
           {
               configuration.RootPath = "ClientApp/build";
@@ -123,12 +142,13 @@ namespace CarbonKitchenBff
           app.UseRouting();
 
           app.UseAuthentication();
-          app.UseBff();
           app.UseAuthorization();
 
           app.UseEndpoints(endpoints =>
           {
-              endpoints.MapBffManagementEndpoints();
+              endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller}/{action=Index}/{id?}");
           });
 
           app.UseSpa(spa =>

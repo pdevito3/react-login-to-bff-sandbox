@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import useClaims from '../apis/claims';
 
 function Home() {
-	const { data: claims, isLoading } = useClaims();
-	let logoutUrl = claims?.find(claim => claim.type === 'bff:logout_url')
+	const { data: claimsResponse, isLoading } = useClaims();
+	let claims = claimsResponse?.claims;
+	// let logoutUrl = claims?.find(claim => claim.type === 'bff:logout_url')
 	let nameDict = claims?.find(claim => claim.type === 'name') ||  claims?.find(claim => claim.type === 'sub');
 	let username = nameDict?.value;
 
@@ -14,7 +15,7 @@ function Home() {
 	return (		
 		<>
 			<div className="p-20 m-12 border rounded-md">
-				<Mvc username={username} logoutUrl={logoutUrl}/>
+				<Mvc username={username} logoutUrl={"/auth/logout"}/>
 			</div>
 			
 			<div className="p-20 m-12 border rounded-md">
@@ -127,7 +128,7 @@ function Mvc({username, logoutUrl}) {
 			{
 				!username ? (
 					<a
-						href="/bff/login?returnUrl=/"
+						href="/auth/login?returnUrl=/"
 						className="inline-block px-4 py-2 text-base font-medium text-center text-white bg-blue-500 border border-transparent rounded-md hover:bg-opacity-75"
 					>
 						Login
@@ -138,7 +139,7 @@ function Mvc({username, logoutUrl}) {
 							<div className="ml-3">
 								<p className="block text-base font-medium text-blue-500 md:text-sm">{`Hi, ${username}!`}</p>
 								<a
-									href={logoutUrl?.value}
+									href={logoutUrl}
 									className="block mt-1 text-sm font-medium text-blue-200 hover:text-blue-500 md:text-xs"
 								>
 									Logout
