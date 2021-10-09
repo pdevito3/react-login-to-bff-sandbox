@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tailwindcss/forms": "^0.3.3",
+    "auth0-lock": "^11.30.6",
     "axios": "^0.21.4",
     "merge": "^1.2.1",
     "oidc-client": "^1.9.0",

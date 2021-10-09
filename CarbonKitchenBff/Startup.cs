@@ -64,10 +64,10 @@ namespace CarbonKitchenBff
               options.ClientId = clientid;
               options.ClientSecret = secret;
 
-              // Set response type to code
-              options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+              options.ResponseType = "code";
+              options.ResponseMode = "query";
 
-              options.ResponseMode = OpenIdConnectResponseMode.FormPost;
+              options.UsePkce = true;
 
               // Configure the scope
               options.Scope.Clear();

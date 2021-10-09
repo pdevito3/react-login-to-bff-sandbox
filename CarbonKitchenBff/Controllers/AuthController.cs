@@ -35,7 +35,7 @@ namespace CarbonKitchenBff.Controllers
                         new { type = c.Type, value = c.Value })
                     .ToArray();
 
-                return Json(new { isAuthenticated = true, claims = claims });
+                return Json(claims);
             }
 
             return Json(new { isAuthenticated = false });

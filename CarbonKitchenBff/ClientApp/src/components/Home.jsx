@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from "react-hook-form";
 import useClaims from '../apis/claims';
+import { Auth0Lock, Auth0LockPasswordless } from 'auth0-lock'
 
 function Home() {
 	const { data: claimsResponse, isLoading } = useClaims();
+
 	let claims = claimsResponse?.claims;
 	// let logoutUrl = claims?.find(claim => claim.type === 'bff:logout_url')
 	let nameDict = claims?.find(claim => claim.type === 'name') ||  claims?.find(claim => claim.type === 'sub');
 	let username = nameDict?.value;
 
+  const auth0ref = useRef(null);
+  console.log(auth0ref.current)
+
 	if(isLoading)
 		return <div>Loading...</div>
+
+
+  var lock = new Auth0LockPasswordless(
+    "x9PBBz6mRYPUK7nATbMe7AcBQaxUxqRF",
+    "dev-ziza5op9.us.auth0.com",
+    {
+      allowedConnections: ['email'],
+      passwordlessMethod: 'code',
+      // container: auth0ref.current
+    }
+  );
 
 	return (		
 		<>
@@ -21,6 +37,12 @@ function Home() {
 			<div className="p-20 m-12 border rounded-md">
 				<BffForm />
 			</div>
+
+      <div ref={auth0ref}></div>
+
+      <>
+        {lock.show()}
+      </>
 		</>
 	)
 }
@@ -37,90 +59,74 @@ function BffForm() {
 		<div >
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-    			<form className="space-y-6"  onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-									{...register("email", {
-										required: "required",
-										pattern: {
-											value: /\S+@\S+\.\S+/,
-											message: "Entered value does not match email format"
-										}
-									})}
-                  className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-									{...register("password", {
-										required: "required",
-										minLength: {
-											value: 1,
-											message: "min length is 1"
-										}
-									})}
-                  className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-									{...register("remember-me")}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
-                  Remember me
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <img
+            className="w-auto h-12 mx-auto"
+            src="https://www.oncolens.com/wp-content/themes/oncolens/assets/images/logo-header.png" 
+            alt="Oncolens Logo"
+          />
+          <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">Sign in to the Oncolens Portal</h2>
+        </div>
+        
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+          <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+            <form className="space-y-6"  onSubmit={handleSubmit(onSubmit)}>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email address
                 </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    {...register("email", {
+                      required: "required",
+                      pattern: {
+                        value: /\S+@\S+\.\S+/,
+                        message: "Entered value does not match email format"
+                      }
+                    })}
+                    className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  />
+                </div>
               </div>
 
-              <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </a>
+              <div>
+                <button
+                  type="submit"
+                  className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  {/* <span className="px-2 text-gray-500 bg-white">Or continue with</span> */}
+                </div>
+              </div>
+
+              <div className="inline-flex items-center justify-center w-full mx-auto mt-6">
+                <p className="text-gray-500">Don't have an account?</p>
+                <a className="pl-2 text-gray-500 underline hover:text-gray-600" href="#">Sign Up</a>
               </div>
             </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
           </div>
+        </div>
       </div>
     </div>
 	)
 }
+
+
 
 function Mvc({username, logoutUrl}) {
 	return (
