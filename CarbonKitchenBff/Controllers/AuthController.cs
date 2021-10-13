@@ -61,11 +61,6 @@ namespace CarbonKitchenBff.Controllers
             return Unauthorized();
         }
 
-        private class Metadata
-        {
-            public string Type { get; set; }
-            public string Value { get; set; }
-        }
 
         // [HttpGet]
         [Authorize]
