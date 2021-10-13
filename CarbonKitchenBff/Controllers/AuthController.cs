@@ -8,6 +8,7 @@ namespace CarbonKitchenBff.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Dtos;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Http;
 
@@ -20,13 +21,13 @@ namespace CarbonKitchenBff.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public ActionResult Login(string returnUrl = "/auth/unique")
+        public ActionResult Login(string returnUrl = "/")
         {
             return new ChallengeResult("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = "/")
         {
             // signout from client
             await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -37,7 +38,7 @@ namespace CarbonKitchenBff.Controllers
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("access_token");
             _httpContextAccessor.HttpContext.Response.Cookies.Delete("refresh_token");
             
-            return Redirect("/gc"); // will be portal homepage
+            return Redirect(returnUrl); // will be portal homepage
         }
 
         public ActionResult GetUser()
@@ -60,41 +61,21 @@ namespace CarbonKitchenBff.Controllers
 
             return Unauthorized();
         }
-
-
-        // [HttpGet]
-        [Authorize]
-        public IActionResult Callback()
-        {
-            var test = _httpContextAccessor.HttpContext;
-            // HttpContext.Response.Cookies.Append("__test", 
-            //     "some hospital",
-            //     new CookieOptions
-            //     {
-            //         Secure = true,
-            //         SameSite = SameSiteMode.Strict,
-            //         HttpOnly = true
-            //     }
-            // );
-            return Redirect("/gc"); // will be portal homepage
-        }
         
-        public ActionResult Unique()
+        public IActionResult Callback()
         {
             var test = _httpContextAccessor.HttpContext;
 
             // register
             test.Request.Query.TryGetValue("onco_hospital_registration", out var hospitalToRegisterWith);
             if(!string.IsNullOrEmpty(hospitalToRegisterWith))
-                return Redirect("/gc"); // will be portal homepage
+                return Redirect("/requests"); // will be portal homepage
             
             test.Request.Query.TryGetValue("hospital", out var hospital);
             if(!string.IsNullOrEmpty(hospital))
-                return Redirect("/gc"); // will be portal homepage
+                return Redirect("/requests"); // will be portal homepage
             
-            return Redirect("/gc"); // will be portal homepage
-            return Ok("hello world");
+            return Redirect("/requests"); // will be portal homepage
         }
-        
     }
 }

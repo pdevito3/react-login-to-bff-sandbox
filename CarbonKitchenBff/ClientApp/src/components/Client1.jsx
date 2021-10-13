@@ -48,7 +48,10 @@ function Client1() {
 	return (		
 		<>
 			<div className="p-20 m-12 border rounded-md">
-				<Mvc username={username} logoutUrl={"/bff/auth/logout"}/>
+				<Mvc username={username} 
+        logoutUrl={"/auth/logout"}
+        loginUrl={"/auth/login?returnUrl=/auth/callback?onco_hospital_registration=gc"}
+      />
 			</div>
 			
 			<div className="p-20 m-12 border rounded-md">
@@ -77,13 +80,13 @@ function Client1() {
 }
 	
 
-function Mvc({username, logoutUrl}) {
+function Mvc({username, loginUrl, logoutUrl}) {
 	return (
 		<div className="">
 			{
 				!username ? (
 					<a
-            href="/bff/auth/login?returnUrl=/bff/auth/unique?onco_hospital_registration=gc"
+            href={loginUrl}
             className="inline-block px-4 py-2 text-base font-medium text-center text-white bg-blue-500 border border-transparent rounded-md hover:bg-opacity-75"
 					>
 						Login
