@@ -28,17 +28,15 @@ namespace CarbonKitchenBff.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme);
-            // HttpContext.Response.Cookies.Delete("access_token");
-            // HttpContext.Response.Cookies.Delete("refresh_token");
-            // // return Ok(new { status =  "Logged out." });
-            //
-            // return new SignOutResult("Auth0", new AuthenticationProperties
-            // {
-            //     // RedirectUri = Url.Action("Index", "Home");
-            //     RedirectUri = "/"
-            // });
+            // signout from client
+            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            
+            // signout from server
+            await _httpContextAccessor.HttpContext.SignOutAsync("Auth0");
+            
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete("access_token");
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete("refresh_token");
+            
             return Redirect("/gc"); // will be portal homepage
         }
 

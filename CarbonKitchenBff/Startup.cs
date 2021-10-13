@@ -45,7 +45,6 @@ namespace CarbonKitchenBff
           var audience = "auth0.first.api";
           
           
-          services.Configure<CookiePolicyOptions>(options => { /*options.MinimumSameSitePolicy = SameSiteMode.None;*/ });
           services.AddAuthentication(options =>
           {
               options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -70,7 +69,6 @@ namespace CarbonKitchenBff
 
               options.ResponseType = "code";
               options.ResponseMode = "query";
-
               options.UsePkce = true;
 
               // Configure the scope
@@ -113,10 +111,6 @@ namespace CarbonKitchenBff
 
                       return Task.CompletedTask;
                   },
-                  // OnRedirectToIdentityProvider = context => {
-                  //     context.ProtocolMessage.SetParameter("audience", audience);
-                  //     return Task.CompletedTask;
-                  // }
               };
           });
           
@@ -153,7 +147,7 @@ namespace CarbonKitchenBff
           {
               endpoints.MapControllerRoute(
                   name: "default",
-                  pattern: "{controller}/{action=Index}/{id?}");
+                  pattern: "bff/{controller}/{action=Index}/{id?}");
           });
 
           app.UseSpa(spa =>
