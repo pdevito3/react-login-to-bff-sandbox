@@ -35,25 +35,29 @@ namespace CarbonKitchenBff
           //             .WithExposedHeaders("X-Pagination"));
           // });
           
-          services.AddControllersWithViews();
+          services.AddHttpContextAccessor();
 
+          services.AddControllersWithViews();
 
           var domain = "dev-ziza5op9.us.auth0.com";
           var clientid = "x9PBBz6mRYPUK7nATbMe7AcBQaxUxqRF";
           var secret = "UWaajuXkrmUH1ab6udJdIhy3PHk135zKTYuhXadN3M7UtPN1tHysYYYRfKwWhRZs";
           var audience = "auth0.first.api";
           
+          
+          services.Configure<CookiePolicyOptions>(options => { /*options.MinimumSameSitePolicy = SameSiteMode.None;*/ });
           services.AddAuthentication(options =>
           {
               options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
               options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
               options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
           })
-          .AddCookie(o =>
+          .AddCookie(options =>
           {
-              o.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-              o.Cookie.SameSite = SameSiteMode.Strict;
-              o.Cookie.HttpOnly = true;
+              options.Cookie.Name = "__OncolensPortal-Bff";
+              options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+              options.Cookie.SameSite = SameSiteMode.Strict;
+              options.Cookie.HttpOnly = true;
           })
           .AddOpenIdConnect("Auth0", options =>
           {
@@ -73,7 +77,8 @@ namespace CarbonKitchenBff
               options.Scope.Clear();
               options.Scope.Add("openid");
               options.Scope.Add("profile");
-              options.Scope.Add("recipes.read");
+              options.Scope.Add("email");
+              options.Scope.Add("portal.requester");
               
               // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
               // Also ensure that you have added the URL as an Allowed Callback URL in your Auth0 dashboard
@@ -108,10 +113,10 @@ namespace CarbonKitchenBff
 
                       return Task.CompletedTask;
                   },
-                  OnRedirectToIdentityProvider = context => {
-                      context.ProtocolMessage.SetParameter("audience", audience);
-                      return Task.CompletedTask;
-                  }
+                  // OnRedirectToIdentityProvider = context => {
+                  //     context.ProtocolMessage.SetParameter("audience", audience);
+                  //     return Task.CompletedTask;
+                  // }
               };
           });
           

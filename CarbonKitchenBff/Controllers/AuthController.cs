@@ -8,23 +8,38 @@ namespace CarbonKitchenBff.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication.Cookies;
+    using Microsoft.AspNetCore.Http;
 
     public class AuthController : Controller
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ActionResult Login(string returnUrl = "/")
+        public AuthController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+        
+        public ActionResult Login(string returnUrl = "/auth/unique")
         {
             return new ChallengeResult("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
         }
 
         [Authorize]
-        public ActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            return new SignOutResult("Auth0", new AuthenticationProperties
-            {
-                // RedirectUri = Url.Action("Index", "Home");
-                RedirectUri = "/"
-            });
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+            // HttpContext.Response.Cookies.Delete("access_token");
+            // HttpContext.Response.Cookies.Delete("refresh_token");
+            // // return Ok(new { status =  "Logged out." });
+            //
+            // return new SignOutResult("Auth0", new AuthenticationProperties
+            // {
+            //     // RedirectUri = Url.Action("Index", "Home");
+            //     RedirectUri = "/"
+            // });
+            return Redirect("/gc"); // will be portal homepage
         }
 
         public ActionResult GetUser()
@@ -33,12 +48,60 @@ namespace CarbonKitchenBff.Controllers
             {
                 var claims = ((ClaimsIdentity)this.User.Identity).Claims.Select(c =>
                         new { type = c.Type, value = c.Value })
-                    .ToArray();
+                    .ToList();
+                
+                // enrich claims with hospitals and user profile 
 
-                return Json(new { isAuthenticated = true, claims = claims });
+                var metadata = new List<Metadata>();
+                // http call to get their hospitals, if this one they are logging in from isn't in their list, add it
+                metadata.Add(new Metadata { Type = "hospitals", Value = "GC|OSU" });
+                //metadata.add name, email, phone, etc. from new user boundary not tied to web oncolens?
+
+                return Json(new { claims = claims, metadata = metadata });
             }
 
-            return Json(new { isAuthenticated = false });
+            return Unauthorized();
         }
+
+        private class Metadata
+        {
+            public string Type { get; set; }
+            public string Value { get; set; }
+        }
+
+        // [HttpGet]
+        [Authorize]
+        public IActionResult Callback()
+        {
+            var test = _httpContextAccessor.HttpContext;
+            // HttpContext.Response.Cookies.Append("__test", 
+            //     "some hospital",
+            //     new CookieOptions
+            //     {
+            //         Secure = true,
+            //         SameSite = SameSiteMode.Strict,
+            //         HttpOnly = true
+            //     }
+            // );
+            return Redirect("/gc"); // will be portal homepage
+        }
+        
+        public ActionResult Unique()
+        {
+            var test = _httpContextAccessor.HttpContext;
+
+            // register
+            test.Request.Query.TryGetValue("onco_hospital_registration", out var hospitalToRegisterWith);
+            if(!string.IsNullOrEmpty(hospitalToRegisterWith))
+                return Redirect("/gc"); // will be portal homepage
+            
+            test.Request.Query.TryGetValue("hospital", out var hospital);
+            if(!string.IsNullOrEmpty(hospital))
+                return Redirect("/gc"); // will be portal homepage
+            
+            return Redirect("/gc"); // will be portal homepage
+            return Ok("hello world");
+        }
+        
     }
 }

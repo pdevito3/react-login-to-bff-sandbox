@@ -11,8 +11,8 @@ function Home() {
 	let nameDict = claims?.find(claim => claim.type === 'name') ||  claims?.find(claim => claim.type === 'sub');
 	let username = nameDict?.value;
 
-  const auth0ref = useRef(null);
-  console.log(auth0ref.current)
+  const authref = useRef(null);
+  console.log(authref.current)
 
 	if(isLoading)
 		return <div>Loading...</div>
@@ -22,10 +22,62 @@ function Home() {
     "x9PBBz6mRYPUK7nATbMe7AcBQaxUxqRF",
     "dev-ziza5op9.us.auth0.com",
     {
-      allowedConnections: ['email'],
       passwordlessMethod: 'code',
-      // container: auth0ref.current
+      ui: {
+        container: authref.current
+      },
+      auth: {
+
+      }
     }
+  );
+
+  var lockTwo = new Auth0LockPasswordless(
+    "NRovTLnu61rA0S4UYndMQFAouZmVd0IC",
+    "https://oncolens-dev.us.auth0.com/",
+    // "x9PBBz6mRYPUK7nATbMe7AcBQaxUxqRF",
+    // "dev-ziza5op9.us.auth0.com",
+    {
+      passwordlessMethod: "code",
+      allowedConnections: ['email'],
+      // allowSignUp: false,
+      closable: false,
+      configurationBaseUrl: 'https://cdn.us.auth0.com',
+      auth: {
+        redirectUrl: "https://localhost:4301/callback",
+        params: {
+          state: "test",
+          scope: "openid profile email"
+        },
+        responseType: 'token',
+      },
+      ui: {
+        // container: authref.current.value
+      },
+      theme: {
+        //logo:            'YOUR LOGO HERE',
+        // primaryColor:    'blue'
+        logo: 'https://storage.googleapis.com/optio-incentives-public/logos/4_EPS.gif',
+        primaryColor: '#607D8B',
+      },
+      // additionalSignUpFields: [{
+      //   name: "address",
+      //   placeholder: "enter your address",
+      //   // The following properties are optional
+      //   icon: "https://example.com/assests/address_icon.png",
+      //   prefill: "street 123",
+      //   validator: function(address) {
+      //     return {
+      //        valid: address.length >= 10,
+      //        hint: "Must have 10 or more chars" // optional
+      //     };
+      //   }
+      // },
+      // {
+      //   name: "full_name",
+      //   placeholder: "Enter your full name"
+      // }]
+      }
   );
 
 	return (		
@@ -38,11 +90,11 @@ function Home() {
 				<BffForm />
 			</div>
 
-      <div ref={auth0ref}></div>
-
+      <div ref={authref}></div>
+      
       <>
-        {lock.show()}
-      </>
+        {/* {lockTwo.show()} */}
+      </> 
 		</>
 	)
 }
@@ -134,7 +186,7 @@ function Mvc({username, logoutUrl}) {
 			{
 				!username ? (
 					<a
-						href="/auth/login?returnUrl=/"
+						href="/auth/login?returnUrl=/auth/unique"
 						className="inline-block px-4 py-2 text-base font-medium text-center text-white bg-blue-500 border border-transparent rounded-md hover:bg-opacity-75"
 					>
 						Login
