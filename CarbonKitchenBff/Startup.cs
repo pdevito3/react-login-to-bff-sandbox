@@ -147,7 +147,7 @@ namespace CarbonKitchenBff
           {
               endpoints.MapControllerRoute(
                   name: "default",
-                  pattern: "{controller}/{action=Index}/{id?}");
+                  pattern: "bff/{controller}/{action=Index}/{id?}");
           });
 
           app.UseSpa(spa =>

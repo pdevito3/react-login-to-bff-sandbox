@@ -35,9 +35,6 @@ namespace CarbonKitchenBff.Controllers
             // signout from server
             await _httpContextAccessor.HttpContext.SignOutAsync("Auth0");
             
-            _httpContextAccessor.HttpContext.Response.Cookies.Delete("access_token");
-            _httpContextAccessor.HttpContext.Response.Cookies.Delete("refresh_token");
-            
             return Redirect(returnUrl); // will be portal homepage
         }
 

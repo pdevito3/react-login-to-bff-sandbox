@@ -29,7 +29,7 @@ function Client1() {
       closable: false,
       configurationBaseUrl: 'https://cdn.us.auth0.com',
       auth: {
-        redirectUrl: "https://localhost:4301/callback",
+        redirectUrl: "https://localhost:4301/bff/callback",
         params: {
           scope: "openid profile email"
         },
@@ -49,8 +49,8 @@ function Client1() {
 		<>
 			<div className="p-20 m-12 border rounded-md">
 				<Mvc username={username} 
-        logoutUrl={"/auth/logout"}
-        loginUrl={"/auth/login?returnUrl=/auth/callback?onco_hospital_registration=gc"}
+        logoutUrl={"/bff/auth/logout"}
+        loginUrl={"/bff/auth/login?returnUrl=/bff/auth/callback?onco_hospital_registration=gc"}
       />
 			</div>
 			
