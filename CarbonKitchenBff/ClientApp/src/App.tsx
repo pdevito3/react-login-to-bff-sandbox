@@ -1,7 +1,7 @@
+import { Home } from '@/components/Home';
 import React from 'react';
 import { Route, Switch } from 'react-router';
 import { Client1 } from './components/Client1';
-import { Home } from './components/Home';
 import './custom.css';
 
 
