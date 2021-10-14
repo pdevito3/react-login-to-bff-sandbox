@@ -38,6 +38,7 @@ namespace CarbonKitchenBff.Controllers
             return Redirect(returnUrl); // will be portal homepage
         }
 
+        [Authorize]
         public ActionResult GetUser()
         {
             if (User.Identity.IsAuthenticated)
