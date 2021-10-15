@@ -13,7 +13,7 @@ function Requests() {
 		},
 	]
 	return (		
-		<div className="p-20">
+		<div className="p-12">
       <div className="flex flex-col">
 				<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 					<div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
