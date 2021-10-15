@@ -11,9 +11,20 @@ const config = {
 	}
 }
 
+interface GetUserResponse {
+	claims: {
+		type: string;
+		value: string;
+	}[],
+	metadata: {
+		type: string;
+		value: string;
+	}[]
+}
+
 const fetchClaims = async () =>
 	axios.get('/bff/auth/getuser', config)
-		.then((res) => res.data);
+		.then((res) => res.data as GetUserResponse);
 
 
 function useClaims() {
@@ -28,4 +39,4 @@ function useClaims() {
 	)
 }
 
-export { useClaims as default }
+export { useClaims as default };

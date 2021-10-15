@@ -1,8 +1,8 @@
-import { Home } from '@/components/Home';
+import { Client1 } from '@/features/auth/routes/Client1';
+import { Home } from '@/features/auth/routes/Home';
 import React from 'react';
 import { Route, Switch } from 'react-router';
-import { Client1 } from './components/Client1';
-import './custom.css';
+import './index.css';
 
 
 export default function App(){

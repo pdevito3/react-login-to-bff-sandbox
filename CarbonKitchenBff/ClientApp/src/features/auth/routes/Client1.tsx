@@ -1,7 +1,6 @@
+import useClaims from '@/features/auth/apis/claims';
+import { Auth0LockPasswordless } from 'auth0-lock';
 import React, { useRef } from 'react';
-import { useForm } from "react-hook-form";
-import useClaims from '../apis/claims';
-import { Auth0Lock, Auth0LockPasswordless } from 'auth0-lock'
 
 function Client1() {
 	const { data: response, isLoading } = useClaims();
@@ -12,7 +11,6 @@ function Client1() {
 	let username = nameDict?.value;
 
   const authref = useRef(null);
-  console.log(authref.current)
 
 	if(isLoading)
 		return <div>Loading...</div>
@@ -34,9 +32,6 @@ function Client1() {
           scope: "openid profile email"
         },
         responseType: 'token',
-      },
-      ui: {
-        // container: authref.current.value
       },
       theme: {
         logo: "https://www.oncolens.com/wp-content/themes/oncolens/assets/images/logo-header.png",
@@ -79,8 +74,13 @@ function Client1() {
 	)
 }
 	
+interface MvcProps {
+  username: string | undefined;
+  loginUrl: string;
+  logoutUrl: string;
+}
 
-function Mvc({username, loginUrl, logoutUrl}) {
+function Mvc({username, loginUrl, logoutUrl}: MvcProps) {
 	return (
 		<div className="">
 			{
@@ -112,3 +112,4 @@ function Mvc({username, loginUrl, logoutUrl}) {
 }
 
 export { Client1 };
+

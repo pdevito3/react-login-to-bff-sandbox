@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^1.4.1",
+    "@heroicons/react": "^1.0.4",
     "@hookform/resolvers": "^2.8.2",
     "@tailwindcss/forms": "^0.3.3",
     "@testing-library/react": "^12.1.2",
@@ -35,6 +36,7 @@
     "@cypress/react": "^5.10.1",
     "@cypress/webpack-dev-server": "^1.6.0",
     "@testing-library/react-hooks": "^7.0.2",
+    "@types/auth0-lock": "^11.27.3",
     "@types/faker": "^5.5.8",
     "@types/react-router": "^5.1.17",
     "@types/react-router-dom": "^5.3.1",
