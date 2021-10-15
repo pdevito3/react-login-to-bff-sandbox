@@ -1,5 +1,6 @@
-import { Client1 } from '@/features/auth/routes/Client1';
-import { Home } from '@/features/auth/routes/Home';
+import { GenesisCareLogin } from '@/features/auth/routes/GenesisCareLogin';
+import { HomeRedirect } from '@/features/auth/routes/HomeRedirect';
+import { Directory } from '@/features/directory/routes/Directory';
 import { Requests } from '@/features/requests/routes/Requests';
 import React from 'react';
 import { Route, Switch } from 'react-router';
@@ -11,9 +12,10 @@ import './index.css';
 export default function App(){
   return (
     <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/gc' component={Client1} />
+      <Route exact path='/directory' component={Directory} />
+      <Route exact path='/gc' component={GenesisCareLogin} />
       <AuthorizedLayout>
+        <Route path='/' component={HomeRedirect} />
         <Route exact path='/requests' component={Requests} />
         <Route exact path='/newrequest' component={NewRequest} />
       </AuthorizedLayout>

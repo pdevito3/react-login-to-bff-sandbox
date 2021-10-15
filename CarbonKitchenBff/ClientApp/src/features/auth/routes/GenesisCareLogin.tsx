@@ -2,7 +2,7 @@ import useClaims from '@/features/auth/apis/claims';
 import { Auth0LockPasswordless } from 'auth0-lock';
 import React, { useRef } from 'react';
 
-function Client1() {
+function GenesisCareLogin() {
 	const { data: response, isLoading } = useClaims();
 
 	let claims = response?.claims;
@@ -111,5 +111,5 @@ function Mvc({username, loginUrl, logoutUrl}: MvcProps) {
 	)
 }
 
-export { Client1 };
+export { GenesisCareLogin };
 
