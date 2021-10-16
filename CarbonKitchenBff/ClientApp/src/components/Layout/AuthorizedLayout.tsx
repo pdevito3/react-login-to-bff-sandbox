@@ -28,16 +28,20 @@ export default function Header() {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <img
-                    className="block w-auto h-16 lg:hidden"
-                    src={LogoFolded}
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden w-auto h-12 lg:block"
-                    src={LogoHome}
-                    alt="Workflow"
-                  />
+                  <NavLink to="/directory" className="cursor-pointer">
+                    <img
+                      className="block w-auto h-16 lg:hidden"
+                      src={LogoFolded}
+                      alt="Oncolens Logo"
+                    />
+                  </NavLink>
+                  <NavLink to="/directory" className="cursor-pointer">
+                    <img
+                      className="hidden w-auto h-12 lg:block"
+                      src={LogoHome}
+                      alt="Oncolens Logo"
+                    />
+                  </NavLink>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
