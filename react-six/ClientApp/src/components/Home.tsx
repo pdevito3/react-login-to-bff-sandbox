@@ -4,8 +4,8 @@ import useClaims from '../apis/claims';
 
 function Home() {
 	const { data: claims, isLoading } = useClaims();
-	let logoutUrl = claims?.find(claim => claim.type === 'bff:logout_url')
-	let nameDict = claims?.find(claim => claim.type === 'name') ||  claims?.find(claim => claim.type === 'sub');
+	let logoutUrl = claims?.find((claim: any) => claim.type === 'bff:logout_url')
+	let nameDict = claims?.find((claim: any) => claim.type === 'name') ||  claims?.find((claim: any) => claim.type === 'sub');
 	let username = nameDict?.value;
 
 	if(isLoading)
@@ -26,7 +26,7 @@ function Home() {
 
 function BffForm() {
 	const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const onSubmit = async data => {
+  const onSubmit = async (data: any) => {
     // await login(data.email, data.password);
 		alert('submission!')
     reset();
@@ -45,7 +45,6 @@ function BffForm() {
               <div className="mt-1">
                 <input
                   id="email"
-                  name="email"
                   type="email"
                   autoComplete="email"
                   required
@@ -68,7 +67,6 @@ function BffForm() {
               <div className="mt-1">
                 <input
                   id="password"
-                  name="password"
                   type="password"
                   autoComplete="current-password"
                   required
@@ -88,7 +86,6 @@ function BffForm() {
               <div className="flex items-center">
                 <input
                   id="remember-me"
-                  name="remember-me"
                   type="checkbox"
 									{...register("remember-me")}
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
@@ -121,7 +118,12 @@ function BffForm() {
 	)
 }
 
-function Mvc({username, logoutUrl}) {
+interface MvcProps {
+  username: string;
+  logoutUrl: any;
+}
+
+function Mvc({username, logoutUrl}: MvcProps) {
 	return (
 		<div className="">
 			{
