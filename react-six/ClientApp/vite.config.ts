@@ -29,6 +29,7 @@ const certificateName = process.env.npm_package_name
 const certFilePath = join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = join(baseFolder, `${certificateName}.key`);
 
+const path = require('path');
 const { env } = require("process");
 
 const target = env.ASPNETCORE_HTTPS_PORT
@@ -45,6 +46,11 @@ const baseProxy = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [reactRefresh()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '/src')
+    }
+  },
   server: {
     https: {
       key: readFileSync(keyFilePath),

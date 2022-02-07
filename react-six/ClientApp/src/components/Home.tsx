@@ -1,6 +1,6 @@
+import useClaims from '@/apis/claims';
 import React from 'react';
 import { useForm } from "react-hook-form";
-import useClaims from '../apis/claims';
 
 function Home() {
 	const { data: claims, isLoading } = useClaims();
