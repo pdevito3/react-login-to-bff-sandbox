@@ -1,14 +1,8 @@
-import axios from 'axios';
+import { api } from '@/lib/axios';
 import { useQuery } from 'react-query';
 
 const claimsKeys = {
 	claim: ['claims'],
-};
-
-const config = {
-	headers: {
-		'X-CSRF': '1',
-	},
 };
 
 function wait(ms: number) {
@@ -17,14 +11,15 @@ function wait(ms: number) {
 	});
 }
 
-const fetchClaims = async () => axios.get('/bff/user', config).then((res) => res.data);
+const fetchClaims = async () => api.get('/bff/user').then((res) => res.data);
 
 function useClaims() {
 	return useQuery(
 		claimsKeys.claim,
 		async () => {
-			const [result] = await Promise.all([fetchClaims(), wait(500)]);
-			return result;
+			// const [result] = await Promise.all([fetchClaims(), wait(500)]);
+			// return result;
+			return fetchClaims();
 		},
 		{
 			staleTime: Infinity,
@@ -34,4 +29,4 @@ function useClaims() {
 	);
 }
 
-export { useClaims as default };
+export { useClaims };
