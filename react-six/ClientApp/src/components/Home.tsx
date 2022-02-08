@@ -1,6 +1,5 @@
 import useClaims from '@/apis/claims';
 import React from 'react';
-import { useForm } from "react-hook-form";
 
 function Home() {
 	const { data: claims, isLoading } = useClaims();
@@ -8,113 +7,25 @@ function Home() {
 	let nameDict = claims?.find((claim: any) => claim.type === 'name') ||  claims?.find((claim: any) => claim.type === 'sub');
 	let username = nameDict?.value;
 
-	if(isLoading)
-		return <div>Loading...</div>
-
 	return (		
 		<>
-			<div className="p-20 m-12 border rounded-md">
-				<Mvc username={username} logoutUrl={logoutUrl}/>
-			</div>
-			
-			<div className="p-20 m-12 border rounded-md">
-				<BffForm />
-			</div>
+    {
+      isLoading ? (
+        <div className="absolute top-0 left-0 z-10 flex items-center justify-center w-full h-full bg-white opacity-50">
+          {/* <ImSpinner2 className="text-2xl animate-spin" /> */}
+          <svg className="w-5 h-5 text-gray-800 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle className="opacity-25" cx={12} cy={12} r={10} stroke="currentColor" strokeWidth={4} />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+        </div>
+
+      ) : (
+        <div className="p-20 m-12 border rounded-md">
+          <Mvc username={username} logoutUrl={logoutUrl}/>
+        </div>
+      )
+    }
 		</>
-	)
-}
-
-function BffForm() {
-	const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const onSubmit = async (data: any) => {
-    // await login(data.email, data.password);
-		alert('submission!')
-    reset();
-  };
-	
-	return (
-		<div >
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-    			<form className="space-y-6"  onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-									{...register("email", {
-										required: "required",
-										pattern: {
-											value: /\S+@\S+\.\S+/,
-											message: "Entered value does not match email format"
-										}
-									})}
-                  className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-									{...register("password", {
-										required: "required",
-										minLength: {
-											value: 1,
-											message: "min length is 1"
-										}
-									})}
-                  className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  type="checkbox"
-									{...register("remember-me")}
-                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
-          </div>
-      </div>
-    </div>
 	)
 }
 
@@ -152,7 +63,6 @@ function Mvc({username, logoutUrl}: MvcProps) {
 			}
 		</div>
 	)
-
 }
 
 export { Home };
