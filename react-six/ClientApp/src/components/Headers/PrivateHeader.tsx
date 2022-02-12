@@ -4,8 +4,8 @@ import React, { Fragment } from 'react';
 
 function PrivateHeader() {
 	return (
-		<nav className="bg-gray-800">
-			<div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+		<nav className="bg-gray-900">
+			<div className="px-2 mx-auto sm:px-6 lg:px-8">
 				<div className="relative flex items-center justify-between h-16">
 					<div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
 					<div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
