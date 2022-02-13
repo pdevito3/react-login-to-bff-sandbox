@@ -1,13 +1,8 @@
 import React from 'react';
-import { useClaims } from '@/features/auth';
+import { useAuthUser } from '@/features/auth';
 
 function Login() {
-	const { data: claims, isLoading } = useClaims();
-	let logoutUrl = claims?.find((claim: any) => claim.type === 'bff:logout_url');
-	let nameDict =
-		claims?.find((claim: any) => claim.type === 'name') ||
-		claims?.find((claim: any) => claim.type === 'sub');
-	let username = nameDict?.value;
+	const { username, logoutUrl, isLoading } = useAuthUser();
 
 	return (
 		<>

@@ -1,2 +1,2 @@
-export * from './api/useClaims';
+export * from './api/useAuthUser';
 export * from './routes';
