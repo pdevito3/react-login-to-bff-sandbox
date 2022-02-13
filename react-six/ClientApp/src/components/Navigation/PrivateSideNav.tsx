@@ -13,6 +13,7 @@ import {
 	XIcon,
 } from '@heroicons/react/outline';
 import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
 
 const navigation = [
 	{ name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -25,20 +26,6 @@ const navigation = [
 
 export default function PrivateSideNav() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
-
-	/***********************************
-	 *
-	 *
-	 *
-	 *
-	 *
-	 * modified from tui, but should do some more to make it a distinct component. probably some more button work
-	 *
-	 *
-	 *
-	 *
-	 *
-	 */
 
 	return (
 		<>
@@ -66,7 +53,7 @@ export default function PrivateSideNav() {
 							leaveTo="translate-y-full"
 						>
 							<div className="absolute bottom-0 w-full px-2 h-1/2">
-								<div className="relative flex flex-col flex-1 w-full h-full bg-gray-800 rounded-md">
+								<div className="relative flex flex-col flex-1 w-full h-full bg-gray-800 rounded-t-xl">
 									<Transition.Child
 										as={Fragment}
 										enter="ease-in-out duration-[400ms]"
@@ -76,7 +63,7 @@ export default function PrivateSideNav() {
 										leaveFrom="opacity-100"
 										leaveTo="opacity-0"
 									>
-										<div className="absolute top-0 right-0 mr-2 -mt-14">
+										<div className="absolute top-0 right-0 mr-2 -mt-12">
 											<button
 												type="button"
 												className="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -95,16 +82,16 @@ export default function PrivateSideNav() {
 												alt="Workflow"
 											/>
 										</div>
-										<nav className="px-2 mt-5 space-y-1">
+										<nav className="mt-5">
 											{navigation.map((item) => (
-												<a
+												<NavLink
 													key={item.name}
-													href={item.href}
+													to={item.href}
 													className={clsx(
 														item.current
 															? 'bg-gray-900 text-white'
-															: 'text-white hover:bg-gray-800 hover:bg-opacity-75',
-														'group flex items-center rounded-md px-2 py-2 text-base font-medium'
+															: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
+														'group flex items-center p-4 text-base font-medium'
 													)}
 												>
 													<item.icon
@@ -112,7 +99,7 @@ export default function PrivateSideNav() {
 														aria-hidden="true"
 													/>
 													{item.name}
-												</a>
+												</NavLink>
 											))}
 										</nav>
 									</div>
@@ -130,31 +117,31 @@ export default function PrivateSideNav() {
 					{/* Sidebar component, swap this element with another sidebar if you like */}
 					<div className="flex flex-col flex-1 min-h-0 bg-gray-800">
 						<div className="flex flex-col flex-1 py-2 overflow-y-auto">
-							<nav className="flex-1 px-2 mt-2 space-y-1">
+							<nav className="space-y-1 flex-1mt-2">
 								{navigation.map((item) => (
-									<a
+									<NavLink
 										key={item.name}
-										href={item.href}
+										to={item.href}
 										className={clsx(
 											item.current
 												? 'bg-gray-900 text-white'
 												: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
-											'group flex items-center rounded-md px-2 py-2 text-sm font-medium'
+											'group flex items-center px-3 py-3 text-sm font-medium'
 										)}
 									>
 										<item.icon
-											className="flex-shrink-0 w-6 h-6 mr-3 text-gray-400"
+											className="flex-shrink-0 w-6 h-6 mr-3 text-gray-500"
 											aria-hidden="true"
 										/>
 										{item.name}
-									</a>
+									</NavLink>
 								))}
 							</nav>
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col flex-1 md:pl-64">
-					<div className="absolute z-10 pt-1 pl-1 bg-gray-100 rounded-full bottom-4 right-4 sm:pl-3 sm:pt-3 md:hidden">
+					<div className="absolute z-10 p-1 bg-gray-100 rounded-full bottom-4 right-4 sm:p-2 md:hidden">
 						<button
 							type="button"
 							className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gray-500"

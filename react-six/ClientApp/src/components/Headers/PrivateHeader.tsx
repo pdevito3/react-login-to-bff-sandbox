@@ -8,10 +8,10 @@ function PrivateHeader() {
 			<div className="px-2 mx-auto sm:px-6 lg:px-8">
 				<div className="relative flex items-center justify-between h-16">
 					<div className="absolute inset-y-0 left-0 flex items-center sm:hidden"></div>
-					<div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+					<div className="flex items-center justify-start flex-1 sm:items-stretch">
 						<div className="flex items-center flex-shrink-0">
 							<img
-								className="block w-auto h-8 lg:hidden"
+								className="block w-auto h-8 pl-2 lg:hidden"
 								src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
 								alt="Workflow"
 							/>
@@ -22,7 +22,7 @@ function PrivateHeader() {
 							/>
 						</div>
 					</div>
-					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+					<div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-5 sm:static sm:inset-auto sm:ml-6 sm:space-x-2 sm:pr-0">
 						<button
 							type="button"
 							className="p-1 text-gray-400 bg-gray-900 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
