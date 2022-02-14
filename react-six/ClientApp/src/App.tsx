@@ -23,6 +23,7 @@ function App() {
 
 					{/* public layout with public route children */}
 					<Route element={<PublicLayout />}>
+						{/* // TODO do this on server side */}
 						{!isLoggedIn ? <Route path="/" element={<Login />} /> : null}
 						<Route path="/login" element={<Login />} />
 					</Route>

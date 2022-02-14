@@ -113,9 +113,16 @@ export default function PrivateSideNav() {
 				</Transition.Root>
 
 				{/* Static sidebar for desktop */}
-				<div className="hidden md:fixed md:top-16 md:bottom-0 md:flex md:w-64 md:flex-col">
+				<div className="hidden h-full md:flex md:w-64 md:flex-col">
 					{/* Sidebar component, swap this element with another sidebar if you like */}
 					<div className="flex flex-col flex-1 min-h-0 bg-gray-800">
+						<div className="flex items-center flex-shrink-0 h-16 px-4 bg-gray-900">
+							<img
+								className="w-auto h-8"
+								src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+								alt="Workflow"
+							/>
+						</div>
 						<div className="flex flex-col flex-1 py-2 overflow-y-auto">
 							<nav className="space-y-1 flex-1mt-2">
 								{navigation.map((item) => (

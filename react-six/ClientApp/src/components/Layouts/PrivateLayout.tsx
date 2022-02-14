@@ -8,10 +8,10 @@ function PrivateLayout() {
 	const { username, logoutUrl } = useAuthUser();
 
 	return (
-		<>
-			<PrivateHeader />
-			<div className="flex h-full">
-				<PrivateSideNav />
+		<div className="flex w-full h-full">
+			<PrivateSideNav />
+			<div className="w-full h-full">
+				<PrivateHeader />
 				<main className="flex-1 p-4">
 					<div className="">
 						{!username ? (
@@ -34,7 +34,7 @@ function PrivateLayout() {
 					<Outlet />
 				</main>
 			</div>
-		</>
+		</div>
 	);
 }
 
