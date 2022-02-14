@@ -83,10 +83,10 @@ namespace CarbonKitchenAuth
                     ClientSecrets = { new Secret("secret".Sha256()) },
                     
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = { "https://localhost:4301/signin-oidc" },
-                    FrontChannelLogoutUri = "https://localhost:4301/signout-oidc",
-                    PostLogoutRedirectUris = { "https://localhost:4301/signout-callback-oidc" },
-                    AllowedCorsOrigins = {"https://localhost:5375", "https://localhost:4301"},
+                    RedirectUris = { "https://localhost:44434/signin-oidc" },
+                    FrontChannelLogoutUri = "https://localhost:44434/signout-oidc",
+                    PostLogoutRedirectUris = { "https://localhost:44434/signout-callback-oidc" },
+                    AllowedCorsOrigins = {"https://localhost:5375", "https://localhost:44434"},
                     
                     AllowOfflineAccess = true,
                     RequirePkce = true,
