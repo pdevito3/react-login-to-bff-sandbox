@@ -12,7 +12,7 @@ function PrivateLayout() {
 			<PrivateSideNav />
 			<div className="w-full h-full">
 				<PrivateHeader />
-				<main className="flex-1 p-4">
+				<main className="flex-1 h-full p-4 bg-gray-50">
 					<div className="">
 						{!username ? (
 							<a

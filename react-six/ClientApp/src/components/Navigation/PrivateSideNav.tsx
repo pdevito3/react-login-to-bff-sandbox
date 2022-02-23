@@ -89,7 +89,7 @@ export default function PrivateSideNav() {
 													to={item.href}
 													className={clsx(
 														item.current
-															? 'bg-gray-900 text-white'
+															? 'bg-gray-900 text-white border-l-4 border-white'
 															: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
 														'group flex items-center p-4 text-base font-medium'
 													)}
@@ -116,7 +116,7 @@ export default function PrivateSideNav() {
 				<div className="hidden h-full md:flex md:w-64 md:flex-col">
 					{/* Sidebar component, swap this element with another sidebar if you like */}
 					<div className="flex flex-col flex-1 min-h-0 bg-gray-800">
-						<div className="flex items-center flex-shrink-0 h-16 px-4 bg-gray-900">
+						<div className="flex items-center flex-shrink-0 h-16 px-4 bg-gray-900 shadow-lg">
 							<img
 								className="w-auto h-8"
 								src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
@@ -124,14 +124,14 @@ export default function PrivateSideNav() {
 							/>
 						</div>
 						<div className="flex flex-col flex-1 py-2 overflow-y-auto">
-							<nav className="space-y-1 flex-1mt-2">
+							<nav className="flex-1 mt-6 space-y-1">
 								{navigation.map((item) => (
 									<NavLink
 										key={item.name}
 										to={item.href}
 										className={clsx(
 											item.current
-												? 'bg-gray-900 text-white'
+												? 'bg-gray-900 text-white border-l-4 border-white'
 												: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
 											'group flex items-center px-3 py-3 text-sm font-medium'
 										)}
