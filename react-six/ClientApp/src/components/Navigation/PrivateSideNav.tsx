@@ -10,18 +10,20 @@ import {
 	InboxIcon,
 	MenuIcon,
 	UsersIcon,
+	CakeIcon,
 	XIcon,
 } from '@heroicons/react/outline';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 const navigation = [
-	{ name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-	{ name: 'Team', href: '#', icon: UsersIcon, current: false },
-	{ name: 'Projects', href: '#', icon: FolderIcon, current: false },
-	{ name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-	{ name: 'Documents', href: '#', icon: InboxIcon, current: false },
-	{ name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+	{ name: 'Home', href: '/', icon: HomeIcon, current: true },
+	{ name: 'Recipes', href: '/recipes', icon: CakeIcon, current: false },
+	// { name: 'Team', href: '#', icon: UsersIcon, current: false },
+	// { name: 'Projects', href: '#', icon: FolderIcon, current: false },
+	// { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+	// { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+	// { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ];
 
 export default function PrivateSideNav() {
@@ -87,8 +89,8 @@ export default function PrivateSideNav() {
 												<NavLink
 													key={item.name}
 													to={item.href}
-													className={clsx(
-														item.current
+													className={({ isActive }) => clsx(
+														isActive
 															? 'bg-gray-900 text-white border-l-4 border-white'
 															: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
 														'group flex items-center p-4 text-base font-medium'
@@ -129,8 +131,8 @@ export default function PrivateSideNav() {
 									<NavLink
 										key={item.name}
 										to={item.href}
-										className={clsx(
-											item.current
+										className={({ isActive }) => clsx(
+											isActive
 												? 'bg-gray-900 text-white border-l-4 border-white'
 												: 'text-white hover:bg-gray-700 hover:bg-opacity-75',
 											'group flex items-center px-3 py-3 text-sm font-medium'
