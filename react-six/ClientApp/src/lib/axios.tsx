@@ -4,6 +4,7 @@ import Axios from 'axios';
 // import { useNotificationStore } from '@/stores/notifications';
 
 export const api = Axios.create({
+	withCredentials: true,
 	headers: {
 		'X-CSRF': '1',
 	},

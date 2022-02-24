@@ -76,6 +76,8 @@ app.UseEndpoints(endpoints =>
     // endpoints.MapRemoteBffApiEndpoint(
     //         "/recipemanagement", "https://localhost:something/recipemanagement")
     //     .RequireAccessToken(TokenType.User);
+    endpoints.MapRemoteBffApiEndpoint("/api/recipes", "https://localhost:5375/api/recipes")
+        .RequireAccessToken(TokenType.UserOrClient);
 });
 
 // app.MapControllerRoute(
