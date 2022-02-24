@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import {
 	CalendarIcon,
@@ -14,7 +14,7 @@ import {
 	XIcon,
 } from '@heroicons/react/outline';
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const navigation = [
 	{ name: 'Home', href: '/', icon: HomeIcon, current: true },
@@ -28,6 +28,11 @@ const navigation = [
 
 export default function PrivateSideNav() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		setSidebarOpen(false);
+	}, [pathname]);
 
 	return (
 		<>
