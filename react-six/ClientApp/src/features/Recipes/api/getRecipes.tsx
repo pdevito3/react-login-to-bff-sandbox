@@ -1,21 +1,13 @@
 import { api } from '@/lib/axios';
 import { useQuery } from 'react-query';
 import { RecipeKeys } from './recipes.keys';
+import queryString from 'query-string'
+import { QueryParams, RecipeDto } from "../types";
+import { PagedResponse } from "@/Types/api";
 
-
-// const getRecipes = (queryString: string) => {
-// 	return api.get(`/api/recipes?${queryString}`).then((response) => {
-// 		const apiResponse = response.data as RecipeDto[];
-
-// 		return {
-// 			data: apiResponse,
-// 			pagination: JSON.parse(response.headers['x-pagination']) as Pagination
-// 		} as PagedApiResponse<RecipeDto>
-// 	});
-// };
 const getRecipes = (queryString: string) => {
 	return api.get(`/api/recipes?${queryString}`).then((response) => {
-		const apiResponse = response.data as any;
+		const apiResponse = response.data as PagedResponse<RecipeDto>;
 
 		return {
 			data: apiResponse,
@@ -24,12 +16,12 @@ const getRecipes = (queryString: string) => {
 	});
 };
 
-const useRecipes = (queryString: string) => {
-	var qs = `pageSize=10&pageNumber=10&filters=filters&sortOrder=sortOrder`;
+const useRecipes = ({ pageNumber, pageSize, filters, sortOrder }: QueryParams = {}) => {
+	const queryParams = queryString.stringify({ pageNumber, pageSize, filters, sortOrder });
 
 	return useQuery(
-		RecipeKeys.list(queryString ?? ''),
-		() => getRecipes(queryString)
+		RecipeKeys.list(queryParams ?? ''),
+		() => getRecipes(queryParams)
 	);
 };
 
