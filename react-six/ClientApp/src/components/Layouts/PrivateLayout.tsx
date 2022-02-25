@@ -1,4 +1,4 @@
-import { useAuthUser } from '@/features/auth';
+import { useAuthUser } from '@/features/Auth';
 import React from 'react';
 import { Outlet } from 'react-router';
 import { PrivateHeader } from '../Headers';

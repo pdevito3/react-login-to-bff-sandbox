@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React, { Fragment } from 'react';
 import Avatar from 'react-avatar';
-import { useAuthUser } from '@/features/auth';
+import { useAuthUser } from '@/features/Auth';
 
 function PrivateHeader() {
 	const { username, logoutUrl } = useAuthUser();

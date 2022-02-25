@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuthUser } from '@/features/auth';
+import { useAuthUser } from '@/features/Auth';
 
 function Login() {
 	const { username, logoutUrl, isLoading } = useAuthUser();

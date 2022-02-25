@@ -1,5 +1,5 @@
 import React from 'react';
-import { Login, useAuthUser } from './features/auth';
+import { Login, useAuthUser } from './features/Auth';
 import './custom.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { PrivateLayout, PublicLayout } from './components/Layouts';
